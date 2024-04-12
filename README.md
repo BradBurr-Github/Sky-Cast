@@ -1,6 +1,6 @@
-# Task Board
+# SkyCast
 
-SkyCast - A 5-day weather forecasting app.
+SkyCast: A 5-day weather forecasting app.
  
 ## Image of My Website
  
