@@ -7,10 +7,21 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <main>
+    <nav>
       <section class="title-bar">
         <h1 class="title">SkyCast Weather Forecast</h1>
       </section>
+    </nav>
+    <main class="container">
+      <div class="column left">
+        <h3>Search for a  City:</h3>
+        <input type="text" id="city-name" name="city-name">
+        <button type="button" class="btn btn-primary">Search</button>
+      </div>
+      <div class="column right">
+        <h2>Right Column</h2>
+        <p>5-Day Forecast:</p>
+      </div>
     </main>
     <script src="./assets/js/script.js"></script>
   </body>
