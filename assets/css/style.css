@@ -31,7 +31,7 @@ body {
     display: flex;
     padding: 20px;
     justify-content: flex-start;
-    column-gap: 40px;
+    column-gap: 20px;
 }
 
 .column-left {
@@ -81,6 +81,18 @@ body {
 }
 
 #label-five-day {
-    font-size: 30px;
-    margin-top: 20px;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+#five-day-container {
+    display: flex;
+    
+}
+
+.card {
+    width: 200px;
+    height: 300px;
+    margin-right: 20px;
 }
