@@ -27,25 +27,60 @@ body {
     text-align: center;
 }
 
-.container {
+.col-container {
     display: flex;
-    max-width: 1000px;
+    padding: 20px;
+    justify-content: flex-start;
+    column-gap: 40px;
 }
 
-.column {
-    padding: 15px;
+.column-left {
+    padding: 5px;
+    width: 25%;
+    max-width: 300px;
 }
 
-.left {
-    text-align: left;
-    flex-basis: 35%;
-    order: 0;
+.column-right {
+    padding: 5px;
+    width: 100%;
+}
+
+#label-search {
+
+    margin-top: 20px;
+    margin-left: 6px;
 }
 
 #city-name {
-    padding: 20px;
-    height: 35px;
+    padding: 10px 15px;
     width: 100%;
-    margin: 10px 0px;
+    border-radius: 5px;
+
+    font-size: 20px;
+}
+
+.btn-search {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 10px;
     font-size: 18px;
+}
+
+.btn-city {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#today-area {
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+#label-five-day {
+    font-size: 30px;
+    margin-top: 20px;
 }
