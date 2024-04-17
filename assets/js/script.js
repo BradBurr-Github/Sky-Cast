@@ -118,8 +118,6 @@ const fetchFiveDayWeatherData = async (lat, lon) => {
 };
 
 
-cities-searched
-
 // Function to render buttons
 function renderButtonsForCitySearchHistory() {
    let btnNew = document.createElement("button");
@@ -167,5 +165,5 @@ $(document).ready(function () {
    // Hide Five Day forecast cards at first
    showFiveDayCards(false);
    // Render  to the screen
-   //renderTaskList();
+   renderButtonsForCitySearchHistory();
  });
