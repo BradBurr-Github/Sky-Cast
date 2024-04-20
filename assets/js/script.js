@@ -4,6 +4,7 @@ const todayArea = document.getElementById("today-area");
 const todayCityEl = document.getElementById("today-city");
 const todayIcon = document.getElementById("today-icon");
 const fiveDayContainerEl = document.getElementById("five-day-container");
+const todayDescEl = document.getElementById("today-desc");
 
 // OpenWeatherMap API calls
 const apiGeoCoding = "http://api.openweathermap.org/geo/1.0/direct";
@@ -17,13 +18,14 @@ let currLon = '';
 let result = '';
 
 // Function to show or hide 5-day forecast cards
-function showFiveDayCards(showCards) {
+function showForecastData(showCards) {
    if (showCards) {
       fiveDayContainerEl.style.display = "inline";
    }
    else {
       fiveDayContainerEl.style.display = "none";
    }
+   $("today-icon").hide();
 }
 
 // Function to read cities from localStorage
@@ -59,7 +61,8 @@ function saveCurrCityWeatherToLocalStorage(city,data) {
       temp: data.main.temp,
       wind: data.wind.speed,
       humidity: data.main.humidity,
-      desc: data.weather[0].description
+      desc: data.weather[0].description,
+      descLength: data.weather[0].description.length
     };
     localStorage.setItem('owm-curr-city',JSON.stringify(currCity));
 }
@@ -141,14 +144,38 @@ function renderButtonsCitySearchHistory() {
    }
 }
 
-// Function to render weather data to the page
+// Function to render weather data to the Today area of the webpage
 function renderWeatherForCurrCity() {
    let currWeather = getCurrCityWeatherFromLocalStorage();
    if(currWeather) {
-      debugger;
-      todayCityEl.textContent = `${currWeather.city} (${currWeather.day}, ${currWeather.date})`;
-      todayIcon.src = 'https://openweathermap.org/img/w/' + currWeather.icon + '.png'
+      $("#today-city").text(`${currWeather.city} (${currWeather.day}, ${currWeather.date})`);
+
+      todayIcon.src = 'https://openweathermap.org/img/w/' + currWeather.icon + '.png';
+      
+      
+      //$("#today-icon").parent().css({position: 'relative'});
+      let width = todayArea.getBoundingClientRect().width;
+      $("#today-icon").css({top: -40, left: (width/2)+50, position:'relative'});
+      $("#today-desc").text(`(${currWeather.desc})`);
+
+      $("#today-desc").css({top: -50, left: (width/2)+30, position:'relative'});
+      todayIcon.width = "100";
+      todayIcon.height = "100";
+
+      todayDescEl.style.textTransform = "capitalize";
+
+      $("#today-temp").text("temp");
+      $("#today-wind").text("wind");
+      $("#today-humidity").text("humidity");
    }
+}
+
+function moveTodayIcon() {
+   
+   let width = todayArea.getBoundingClientRect().width;
+   console.log(width);
+   $("#today-icon").css({left: (width/2)+50, position:'relative'});
+   $("#today-desc").css({left: (width/2)+30, position:'relative'});
 }
 
 // On Click event for the SEARCH button
@@ -174,10 +201,14 @@ $("#btn-search").on("click", function(event) {
    }   
 });
 
+$(window).on("resize", function() {
+   moveTodayIcon();
+});
+
 // Runs when the page loads
 $(document).ready(function () {
    // Hide Five Day forecast cards at first
-   showFiveDayCards(false);
+   showForecastData(false);
    // Render buttons to the screen
    renderButtonsCitySearchHistory();
  });
