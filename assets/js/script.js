@@ -1,5 +1,8 @@
 // Elements in the DOM
 const citiesSearchedEl = document.getElementById("cities-searched");
+const todayArea = document.getElementById("today-area");
+const todayCityEl = document.getElementById("today-city");
+const todayIcon = document.getElementById("today-icon");
 const fiveDayContainerEl = document.getElementById("five-day-container");
 
 // OpenWeatherMap API calls
@@ -47,8 +50,6 @@ function getCurrCityWeatherFromLocalStorage() {
 
 // Function to save current city's weather data to localStorage
 function saveCurrCityWeatherToLocalStorage(city,data) {
-   debugger;
-   //let day = dayjs().format(hhh);
    let day = dayjs().format('ddd');
    const currCity = {
       city: city,
@@ -82,6 +83,12 @@ function addNewCityToLocalStorage(city,lat,lon) {
          foundCity = true;
          cityArray[i].city = city;
          updated = true;
+         // Update Button textContent
+         for(const child of citiesSearchedEl.children) {
+            if(child.textContent.toUpperCase() == city.toUpperCase()) {
+               child.textContent = city;
+               break;
+            }}
          break;
       }
    }
@@ -94,6 +101,7 @@ function addNewCityToLocalStorage(city,lat,lon) {
        };
        cityArray.push(newCity);
        updated = true;
+       appendButtonCitySearchHistory(city);
    }
    if(updated) {
       saveCitiesToLocalStorage(cityArray);
@@ -117,22 +125,30 @@ const fetchFiveDayWeatherData = async (lat, lon) => {
    return data;
 };
 
-
-// Function to render buttons
-function renderButtonsForCitySearchHistory() {
+// Function to add a new button to the City Search History column
+function appendButtonCitySearchHistory(city) {
    let btnNew = document.createElement("button");
    btnNew.className = "btn btn-secondary btn-city";
+   btnNew.textContent = city;
    citiesSearchedEl.appendChild(btnNew);
-   
-//   getCurrCityWeatherFromLocalStorage();
+}
 
+// Function to render buttons
+function renderButtonsCitySearchHistory() {
+   cityArray = getCitiesFromLocalStorage();
+   for(let i=0; i<cityArray.length; i++) {
+      appendButtonCitySearchHistory(cityArray[i].city);
+   }
 }
 
 // Function to render weather data to the page
 function renderWeatherForCurrCity() {
-
-   getCurrCityWeatherFromLocalStorage();
-
+   let currWeather = getCurrCityWeatherFromLocalStorage();
+   if(currWeather) {
+      debugger;
+      todayCityEl.textContent = `${currWeather.city} (${currWeather.day}, ${currWeather.date})`;
+      todayIcon.src = 'https://openweathermap.org/img/w/' + currWeather.icon + '.png'
+   }
 }
 
 // On Click event for the SEARCH button
@@ -149,10 +165,8 @@ $("#btn-search").on("click", function(event) {
                   console.log(data);
                   addNewCityToLocalStorage(cityEntered,data.coord.lat,data.coord.lon)
                   saveCurrCityWeatherToLocalStorage(cityEntered,data);
-
-                  //renderWeatherForCurrCity();
-
-                  
+                  renderWeatherForCurrCity();
+                  $("#city-name").val('');
                })
                .catch(error => window.alert('Unable to retrieve Weather Information.'));
          })
@@ -164,6 +178,6 @@ $("#btn-search").on("click", function(event) {
 $(document).ready(function () {
    // Hide Five Day forecast cards at first
    showFiveDayCards(false);
-   // Render  to the screen
-   renderButtonsForCitySearchHistory();
+   // Render buttons to the screen
+   renderButtonsCitySearchHistory();
  });

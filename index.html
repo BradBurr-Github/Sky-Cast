@@ -25,27 +25,29 @@
   <body>
     <nav>
       <section class="title-bar">
-        <h1 class="title">SkyCast Weather Forecast</h1>
+        <h2 class="title">SkyCast Weather Forecast</h2>
       </section>
     </nav>
     <main class="col-container">
       <div class="column-left">
-        <h3 id="label-search">Search for a  City:</h3>
+        <h5 id="label-search">Search for a  City:</h5>
         <input type="text" id="city-name" name="city-name">
         <button type="button" class="btn btn-primary btn-search" id="btn-search">Search</button>
         <hr>
         <div id="cities-searched">
-          <button type="button" class="btn btn-secondary btn-city">Paris</button>
-          <button type="button" class="btn btn-secondary btn-city">London</button>
         </div>
       </div>
       <div class="column-right">
         <div id="today-area">
-          <h4>TODAY'S FORECAST:</h4>
-          <h4>Possible RAIN</h4>
-          <h4>Windy</h4>
+          <h5 id="today-city"></h5>
+          <img id="today-icon" width="50" height="50">
+          <div id="today-temp-wind-humidity">
+            <p id="tody-temp">Temp</p>
+            <p id="today-wind">Wind</p>
+            <p id="today-humidity">Humidity</p>
+          </div>
         </div>
-        <h4 id="label-five-day">5-Day Forecast:</h4>
+        <h6 id="label-five-day">5-Day Forecast:</h6>
         <div id="five-day-container" style='display:none'>
           <div class="card">
             <div class="card-body">

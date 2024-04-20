@@ -18,9 +18,8 @@ body {
 }
   
 .title-bar {
-    height: 70px;
+    height: 60px;
     width: 100%;
-    font-size: 36px;
     background-color: var(--bg-blue);
     color: var(--font-title);
     align-content: center;
@@ -29,7 +28,7 @@ body {
 
 .col-container {
     display: flex;
-    padding: 20px;
+    padding: 10px;
     justify-content: flex-start;
     column-gap: 20px;
 }
@@ -37,7 +36,8 @@ body {
 .column-left {
     padding: 5px;
     width: 25%;
-    max-width: 300px;
+    min-width: 100px;
+    max-width: 200px;
 }
 
 .column-right {
@@ -46,43 +46,55 @@ body {
 }
 
 #label-search {
-
     margin-top: 20px;
     margin-left: 6px;
 }
 
 #city-name {
-    padding: 10px 15px;
+    padding: 6px 10px;
     width: 100%;
     border-radius: 5px;
-
-    font-size: 20px;
+    font-size: 14px;
 }
 
 .btn-search {
     width: 100%;
     margin-top: 15px;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .btn-city {
     width: 100%;
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #today-area {
     width: 100%;
-    height: 200px;
-    background-color: white;
+    height: 172px;
+    background-color: lightgray;
     border-radius: 5px;
-    border: 2px solid black;
+    border: 1px solid black;
+}
+#curr-city {
+    margin: 10px 10px;
+    color:blue;
+    font-weight: bold;
+}
+
+#today-icon {
+    float: right;
+    border: 0;
+}
+
+#today-temp-wind-humidity {
+    font-size: 16px;
+    margin: 5px 5px;
 }
 
 #label-five-day {
-    font-size: 20px;
-    margin-top: 25px;
+    margin-top: 21px;
     margin-bottom: 15px;
 }
 
