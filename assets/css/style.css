@@ -79,23 +79,34 @@ body {
     border-radius: 5px;
     border: 1px solid black;
 }
+
 #today-city {
     margin: 10px 10px;
     color:blue;
     font-weight: bold;
 }
 
+#today-state-country {
+    margin: -5px 10px;
+    color:rgb(8, 8, 245);
+}
+
 #today-icon {
+    margin: -5px 10px;
+}
+
+#today-desc {
+    margin-top: -45px;
 }
 
 #today-temp-wind-humidity {
     font-size: 14px;
     font-weight: bold;
-    margin: 5px 12px;
+    margin: 45px 12px;
 }
 
 #today-temp {
-    margin-top: -130px;
+    margin-top: -105px;
 }
 
 #today-wind {
