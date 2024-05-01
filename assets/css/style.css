@@ -78,6 +78,7 @@ body {
     background-color: lightgray;
     border-radius: 5px;
     border: 1px solid black;
+    margin-bottom: 10px;
 }
 
 #today-city {
@@ -106,22 +107,22 @@ body {
 }
 
 #today-temp {
-    margin-top: -105px;
+    margin-top: -95px;
 }
 
 #today-wind {
-    margin-top: -5px;
+    margin-top: -10px;
 }
 
 #today-humidity {
-    margin-top: -5px;
+    margin-top: -10px;
 }
 
 #label-five-day {
-    color:purple;
+    color:blue;
     font-size: 18px;
     font-weight: bold;
-    padding: 60px 10px;
+    padding-left: 10px;
 }
 
 #five-day-container {
@@ -131,7 +132,39 @@ body {
 
 .card {
     width: 200px;
-    height: 300px;
-    margin-top: 22px;
+    height: 265px;
+    margin-top: 12px;
     margin-right: 20px;
+    background-color: var(--bg-blue);
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    text-align: center;
+    color: white;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.card-desc {
+    font-size: 16px;
+    padding: 15px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.card-temp, .card-wind, .card-humidity {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 7px;
 }

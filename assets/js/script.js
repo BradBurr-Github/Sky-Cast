@@ -163,7 +163,6 @@ function addNewCityToLocalStorage(city,state,country,lat,lon) {
    for(let i=0; i<cityArray.length; i++) {
       if(cityArray[i].city.toUpperCase() == city.toUpperCase()) {
          foundCity = true;
-         console.log(`Found: ${city}`);
          break;
       }
    }
@@ -177,7 +176,6 @@ function addNewCityToLocalStorage(city,state,country,lat,lon) {
          lon: lon
       };
       cityArray.push(newCity);
-      console.log(`ADD: ${city}`);
       appendButtonCitySearchHistory(city);
       saveCitiesToLocalStorage(cityArray);
    }
@@ -207,7 +205,6 @@ function renderWeatherUsingWeatherData(city,state,country,dataCurrent,dataFiveDa
    $("#today-city").text(`${city} (${currDate.format('ddd')}, ${currDate.format('M/D/YY')})`);
    $("#today-state-country").text(`[${state}, ${country}]`);
    todayIcon.src = 'https://openweathermap.org/img/w/' + dataCurrent.weather[0].icon + '.png';
-   //$("#today-icon").parent().css({position: 'relative'});
    let width = todayArea.getBoundingClientRect().width;
    todayDescEl.style.textTransform = "capitalize";
    $("#today-icon").css({top: -40, left: (width/2)+50, position:'relative'});
@@ -219,28 +216,56 @@ function renderWeatherUsingWeatherData(city,state,country,dataCurrent,dataFiveDa
    $("#today-temp").text(`Temp: ${dataCurrent.main.temp} \u00B0F`);
    $("#today-wind").text(`Wind: ${dataCurrent.wind.speed} MPH`);
    $("#today-humidity").text(`Humidity: ${dataCurrent.main.humidity}%`);
+   // Create array for Forecast weather data
+   let fiveDayDataArray = [];
+   for(let i=0; i<5; i++) {
+      let fiveDayDate = currDate.add((i+1),'day');
+      let fiveDayData = {
+         date: fiveDayDate.format('M/D/YY'),
+         day: fiveDayDate.format('ddd'),
+         icon: 0,
+         desc: '',
+         temp: 0,
+         wind: 0,
+         humidity: 0
+      }
+      fiveDayDataArray.push(fiveDayData);
+   }
+   // Fill in Five-Day forecast weather details
+   let k = 0;
+   for(let j=0; j<5; j++) {
+      for(; k<dataFiveDays.list.length; k++) {
+         let datetime = dayjs(dataFiveDays.list[k].dt_txt);
+         let dateFormatted = datetime.format('M/D/YY');
+         if(fiveDayDataArray[j].date === dateFormatted) {
+            fiveDayDataArray[j].icon = dataFiveDays.list[k].weather[0].icon
+            fiveDayDataArray[j].desc = dataFiveDays.list[k].weather[0].description;
+            fiveDayDataArray[j].temp = dataFiveDays.list[k].main.temp;
+            fiveDayDataArray[j].wind = dataFiveDays.list[k].wind.speed;
+            fiveDayDataArray[j].humidity = dataFiveDays.list[k].main.humidity;
+            k++;
+            break;
+         }
+      }
+   }
+   // Render data on Forecast cards
+   let forecastCardChildren = $('#five-day-container').children('.card');
+   forecastCardChildren.each(function(i) {
+      let h5El = $(this).find('.card-title');
+      let iconEl = $(this).find('.card-icon');
+      let descEl = $(this).find('.card-desc');
+      let tempEl = $(this).find('.card-temp');
+      let windEl = $(this).find('.card-wind');
+      let humidityEl = $(this).find('.card-humidity');
+      h5El.text(`${fiveDayDataArray[i].date} (${fiveDayDataArray[i].day})`);
+      iconEl.src = 'https://openweathermap.org/img/w/' + fiveDayDataArray[i].icon + '.png';
+      descEl.text(`(${fiveDayDataArray[i].desc})`);
+      tempEl.text(`Temp: ${fiveDayDataArray[i].temp} \u00B0F`);
+      windEl.text(`Wind: ${fiveDayDataArray[i].wind} MPH`);
+      humidityEl.text(`Humidity: ${fiveDayDataArray[i].humidity}%`);
+   });
    // Show forecast cards
    showForecastData(true);
-
-
-
-   //                  temp: data.main.temp,
-   //                  wind: data.wind.speed,
-   //                  humidity: data.main.humidity,
-   //                  desc: data.weather[0].description,
-   //                  });
-   // for(let i=0; i<5; i++) {
-   //    let fiveDayDate = currDate.add((i+1),'day');
-   //    weatherData.push({day: fiveDayDate.format('ddd'),
-   //                     date: fiveDayDate.format('M/D/YY'),
-   //                     icon: dataFiveDays.list[i].weather[0].icon,
-   //                     temp: dataFiveDays.list[i].main.temp,
-   //                     wind: dataFiveDays.list[i].wind.speed,
-   //                     humidity: dataFiveDays.list[i].main.humidity,
-   //                     desc: dataFiveDays.list[i].weather[0].description,
-   //                     descLength: dataFiveDays.list[i].weather[0].description.length});
-   // }
-
 }
 
 // Function to get Weather Data for a city
@@ -252,7 +277,6 @@ function getWeatherForCity(city,state,country,lat,lon) {
          fetchFiveDayWeatherData(lat,lon)
             .then(dataFiveDays => {
                saveLastCityName(city);
-               console.log(`GetWeather: ${city}`);
                renderWeatherUsingWeatherData(city,state,country,data,dataFiveDays); })
             .catch(error => {
                window.alert('Unable to retrieve Five-Day Weather Information.') })})
@@ -265,7 +289,10 @@ function moveTodayIconAndDesc() {
    let spacing = 50;
    let width = todayArea.getBoundingClientRect().width;
    // Adjust Spacing depending on length of Weather Description
-   if(cityWeatherDescLength <= 4) {
+   if(cityWeatherDescLength < 4) {
+      spacing += 28;
+   }
+   else if(cityWeatherDescLength < 5) {
       spacing += 24;
    }
    else if(cityWeatherDescLength < 6) {
@@ -338,9 +365,7 @@ $("#btn-search").on("click", function(event) {
 function handleBtnCityHistoryClick(event) {
    const btnClicked = $(event.target);
    city = btnClicked[0].innerText;
-   citiesArray = getCitiesArrayFromLocalStorage();
-   console.log(`CLICKED: ${city}`);
-   console.log(`length: ${cityArray.length}`);
+   cityArray = getCitiesArrayFromLocalStorage();
    for(let i=0; i<cityArray.length; i++) {
       if(cityArray[i].city.toUpperCase() == city.toUpperCase()) {
          getWeatherForCity(cityArray[i].city,cityArray[i].state,cityArray[i].country,cityArray[i].lat,cityArray[i].lon);
