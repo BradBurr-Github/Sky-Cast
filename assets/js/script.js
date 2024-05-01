@@ -2,7 +2,6 @@
 const cityNameSearchEl = document.getElementById("city-name");
 const citiesSearchedEl = document.getElementById("cities-searched");
 const todayArea = document.getElementById("today-area");
-const todayCityEl = document.getElementById("today-city");
 const todayIcon = document.getElementById("today-icon");
 const fiveDayLabelEl = document.getElementById("label-five-day");
 const fiveDayContainerEl = document.getElementById("five-day-container");
@@ -19,10 +18,6 @@ const apiFiveDayForecastWeatherLatLon = "https://api.openweathermap.org/data/2.5
 // Global variables
 const myAPIKey = "b1500c788d02c8dad12cb3af11f15c99";
 let cityWeatherDescLength = 4;
-let cityIsExactMatch = false;
-let currLat = '';
-let currLon = '';
-let result = '';
 
 // Function to show or hide 5-day forecast cards
 function showForecastData(showCards) {
@@ -34,7 +29,6 @@ function showForecastData(showCards) {
       fiveDayLabelEl.display = "none";
       fiveDayContainerEl.style.display = "none";
    }
-   //$("today-icon").hide();
 }
 
 // Function to read cities from localStorage
@@ -78,41 +72,6 @@ function saveLastCityName(city) {
    localStorage.setItem('owm-last-city',JSON.stringify(city));
 }
 
-// Function to get current city's weather data from localStorage
-function getCurrCityWeatherFromLocalStorage() {
-   let currCityData = JSON.parse(localStorage.getItem("owm-curr-city-weather"));
-   if (!currCityData) {
-      currCityData = [];
-   }
-   return currCityData;
-}
-
-// Function to save current city's weather data to localStorage
-// function saveCurrCityWeatherToLocalStorage(data,dataFiveDays) {
-//    weatherData = [];
-//    let currDate = dayjs();
-//    weatherData.push({day: currDate.format('ddd'),
-//                     date: currDate.format('M/D/YY'),
-//                     icon: data.weather[0].icon,
-//                     temp: data.main.temp,
-//                     wind: data.wind.speed,
-//                     humidity: data.main.humidity,
-//                     desc: data.weather[0].description,
-//                     descLength: data.weather[0].description.length});
-//    for(let i=0; i<5; i++) {
-//       let fiveDayDate = currDate.add((i+1),'day');
-//       weatherData.push({day: fiveDayDate.format('ddd'),
-//                        date: fiveDayDate.format('M/D/YY'),
-//                        icon: dataFiveDays.list[i].weather[0].icon,
-//                        temp: dataFiveDays.list[i].main.temp,
-//                        wind: dataFiveDays.list[i].wind.speed,
-//                        humidity: dataFiveDays.list[i].main.humidity,
-//                        desc: dataFiveDays.list[i].weather[0].description,
-//                        descLength: dataFiveDays.list[i].weather[0].description.length});
-//    }
-//    localStorage.setItem('owm-curr-city-weather',JSON.stringify(weatherData));
-// }
-
 // Chain promises together so they are all done before returning
 const fetchLatLonForCity = async (city) => {
    let apiGeoCodingWithCity = `${apiGeoCoding}?q=${city}&limit=1&appid=${myAPIKey}`;
@@ -136,24 +95,6 @@ const fetchFiveDayWeatherData = async (lat, lon) => {
    const data = await response.json();
    return data;
 };
-
-// // Function to get Weather Data and save it to locatStorage
-// function GetWeatherDataAndSaveItToLocalStorage(city,lat,lon) {
-//    fetchCurrWeatherData(lat,lon)
-//       .then(data => {
-//          // Get Five-Day Weather Data
-//          fetchFiveDayWeatherData(lat,lon)
-//             .then(dataFiveDays => {
-//                saveLastCityName(city);
-// //               saveLastCityWeatherToLocalStorage(data,dataFiveDays);
-//                return true; })
-//             .catch(error => {
-//                window.alert('Unable to retrieve Five-Day Weather Information.')
-//                return false; })})
-//       .catch(error => {
-//          window.alert('Unable to retrieve Weather Information.')
-//          return false; })
-// }
 
 // Function to update localStorage
 function addNewCityToLocalStorage(city,state,country,lat,lon) {
