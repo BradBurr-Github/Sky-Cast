@@ -236,8 +236,10 @@ function renderWeatherUsingWeatherData(city,state,country,dataCurrent,dataFiveDa
    for(let j=0; j<5; j++) {
       for(; k<dataFiveDays.list.length; k++) {
          let datetime = dayjs(dataFiveDays.list[k].dt_txt);
-         let dateFormatted = datetime.format('M/D/YY');
-         if(fiveDayDataArray[j].date === dateFormatted) {
+         let dateCompare = datetime.format('M/D/YY');
+         let hour = datetime.format('HH');
+         //if((fiveDayDataArray[j].date === dateCompare) && (j===4 || hour >= '12')) {
+         if((fiveDayDataArray[j].date === dateCompare)) {
             fiveDayDataArray[j].icon = dataFiveDays.list[k].weather[0].icon
             fiveDayDataArray[j].desc = dataFiveDays.list[k].weather[0].description;
             fiveDayDataArray[j].temp = dataFiveDays.list[k].main.temp;
@@ -258,7 +260,7 @@ function renderWeatherUsingWeatherData(city,state,country,dataCurrent,dataFiveDa
       let windEl = $(this).find('.card-wind');
       let humidityEl = $(this).find('.card-humidity');
       h5El.text(`${fiveDayDataArray[i].date} (${fiveDayDataArray[i].day})`);
-      iconEl.src = 'https://openweathermap.org/img/w/' + fiveDayDataArray[i].icon + '.png';
+      iconEl.attr("src",'https://openweathermap.org/img/w/' + fiveDayDataArray[i].icon + '.png');
       descEl.text(`(${fiveDayDataArray[i].desc})`);
       tempEl.text(`Temp: ${fiveDayDataArray[i].temp} \u00B0F`);
       windEl.text(`Wind: ${fiveDayDataArray[i].wind} MPH`);
