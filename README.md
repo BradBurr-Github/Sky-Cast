@@ -4,7 +4,7 @@ SkyCast: A 5-day weather forecasting app.
 
 ## Description
 
-This webpage allows the user to search for cities around the World and show the current weather as well as a Five-Day forecast.  It uses the API to get the weather information.  It also saves all of the cities you have searched for in the past and remembers them.
+This webpage allows the user to search for cities around the World and show the current weather as well as a Five-Day forecast.  It uses the OpenWeatherMap.org API to get the weather information.  It also saves all of the cities you have searched for in the past and remembers them.
 
 ## Image of My Website
  
