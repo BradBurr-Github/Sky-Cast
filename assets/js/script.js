@@ -11,8 +11,8 @@ const todayDescEl = document.getElementById("today-desc");
 const citiesSearchedTag = $('#cities-searched');
 
 // OpenWeatherMap API calls
-const apiGeoCoding = "http://api.openweathermap.org/geo/1.0/direct";
-const apiCurrWeatherLatLon = "http://api.openweathermap.org/data/2.5/weather"
+const apiGeoCoding = "https://api.openweathermap.org/geo/1.0/direct";
+const apiCurrWeatherLatLon = "https://api.openweathermap.org/data/2.5/weather"
 const apiFiveDayForecastWeatherLatLon = "https://api.openweathermap.org/data/2.5/forecast"
 
 // Global variables
